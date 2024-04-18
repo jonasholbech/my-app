@@ -1,5 +1,6 @@
 import CommentList from "@/components/CommentList";
-import Image from "next/image";
+export const dynamic = "force-dynamic";
+
 async function getEvent(id) {
   let headersList = {
     Accept: "application/json",
@@ -15,6 +16,7 @@ async function getEvent(id) {
   return await response.json();
 }
 async function getComments(id) {
+  console.log({ id });
   let headersList = {
     Accept: "application/json",
     apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -24,18 +26,16 @@ async function getComments(id) {
       id,
     {
       headers: headersList,
+      cache: "no-store",
     }
   );
-  console.log(response);
   const data = await response.json();
-  console.log(data);
   return data;
 }
 export default async function Event({ params: { id } }) {
   const data = await getEvent(id);
   const event = data[0];
   const comments = await getComments(id);
-  console.log(comments);
   return (
     <>
       <h1>{event.name}</h1>

@@ -1,6 +1,7 @@
 import UserComments from "./UserComments";
 
 export default function CommentList({ comments, event_id }) {
+  console.log(comments);
   return (
     <section>
       <h2>Kommentarer</h2>
